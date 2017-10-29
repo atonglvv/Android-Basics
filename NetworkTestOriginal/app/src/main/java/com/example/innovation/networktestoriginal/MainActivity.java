@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
                 sendRequestWithHttpURLConnection();
             }
         });
-
     }
 
     private void sendRequestWithHttpURLConnection(){
