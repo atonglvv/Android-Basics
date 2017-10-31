@@ -61,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
         showNotifyWithAll();
     }
 
+    @OnClick(R.id.button_cancel)
+    public void OnClickCancel(){
+        clearNotify();
+    }
+
 
     //创建普通Notification 只含有小图标，标题，内容
     private void sendNotification() {
@@ -157,6 +162,14 @@ public class MainActivity extends AppCompatActivity {
                 //等价于setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE);
                 .setDefaults(Notification.DEFAULT_ALL);
         notifyManager.notify(6, builder.build());
+    }
+
+
+    /**
+     * 清除所有通知
+     */
+    private void clearNotify() {
+        notifyManager.cancelAll();
     }
 
 

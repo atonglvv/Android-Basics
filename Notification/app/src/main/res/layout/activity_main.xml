@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
         android:text="Notification" />
 
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:text="NotificationWithAction" />
 
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:text="showNotifyWithRing" />
 
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:text="showNotifyWithVibrete" />
 
@@ -52,8 +52,18 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:text="showNotifyWithAll" />
+
+    <Button
+        android:id="@+id/button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="clearNotify" />
 
 </LinearLayout>
