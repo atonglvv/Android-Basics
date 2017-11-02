@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RemoteViews;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.button_hang)
     public void OnClickHang(){
         showNotifyWithHang();
+    }
+
+    @OnClick(R.id.button_collapse)
+    public void OnClickCollapse(){
+        collapsedNotify();
     }
 
     @OnClick(R.id.button_cancel)
@@ -172,6 +178,36 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent hangPendingIntent = PendingIntent.getActivity(this, 0, hangIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         builder.setFullScreenIntent(hangPendingIntent, true);
         notifyManager.notify(7, builder.build());
+    }
+
+    public void collapsedNotify() {
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("http://www.sina.com"));
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this, 0, intent, 0);
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setSmallIcon(R.mipmap.ic_launcher_round);
+        builder.setContentIntent(pendingIntent);
+        builder.setAutoCancel(true);
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher));
+        // 通过RemoteViews来创建自定义的Notification视图
+        RemoteViews contentView =
+                new RemoteViews(getPackageName(),
+                        R.layout.notification);
+        contentView.setTextViewText(R.id.textView,
+                "show me when collapsed");
+
+        Notification notification = builder.build();
+        notification.contentView = contentView;
+        // 通过RemoteViews来创建自定义的Notification视图
+        RemoteViews expandedView =
+                new RemoteViews(getPackageName(),
+                        R.layout.notification_expanded);
+        notification.bigContentView = expandedView;
+
+        NotificationManager nm = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+        nm.notify(8, notification);
     }
 
     /**
