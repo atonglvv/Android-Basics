@@ -61,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
         showNotifyWithAll();
     }
 
+    @OnClick(R.id.button_hang)
+    public void OnClickHang(){
+        showNotifyWithHang();
+    }
+
     @OnClick(R.id.button_cancel)
     public void OnClickCancel(){
         clearNotify();
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         //通过builder.build()方法生成Notification对象,并发送通知,id=1
         notifyManager.notify(1, builder.build());
     }
-
+    //带Action的Notification
     private void sendSimplestNotificationWithAction(){
         //获取PendingIntent
         Intent intent = new Intent(this,MainActivity.class);
@@ -93,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAutoCancel(true)
                 .setContentTitle("我是带Action的Notification")
                 .setContentText("点我会打开MainActivity")
+                .setAutoCancel(true)
                 //set Intent
                 .setContentIntent(mainPendingIntent);
 
@@ -164,6 +170,25 @@ public class MainActivity extends AppCompatActivity {
         notifyManager.notify(6, builder.build());
     }
 
+    private void showNotifyWithHang() {
+        Notification.Builder builder = new Notification.Builder(this);
+        Intent mIntent = new Intent(this,MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, mIntent, 0);
+        builder.setContentIntent(pendingIntent);
+        builder.setSmallIcon(R.mipmap.ic_launcher_round);
+        builder.setContentText("Heads-Up Notification on Android 5.0");
+        builder.setAutoCancel(true);
+        builder.setContentTitle("悬挂式通知");
+
+        //设置点击跳转
+        Intent hangIntent = new Intent();
+        hangIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        hangIntent.setClass(this, MainActivity.class);
+        //如果描述的PendingIntent已经存在，则在产生新的Intent之前会先取消掉当前的
+        PendingIntent hangPendingIntent = PendingIntent.getActivity(this, 0, hangIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        builder.setFullScreenIntent(hangPendingIntent, true);
+        notifyManager.notify(7, builder.build());
+    }
 
     /**
      * 清除所有通知
