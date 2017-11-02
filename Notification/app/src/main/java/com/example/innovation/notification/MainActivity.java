@@ -5,6 +5,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -22,8 +24,7 @@ import butterknife.OnClick;
 * Learning In   http://www.cnblogs.com/travellife/p/Android-Notification-xiang-jie.html
 * @since 1.0*/
 public class MainActivity extends AppCompatActivity {
-    @BindView(R.id.button_normal)
-    Button buttonNormal;
+
 
     NotificationManager notifyManager;
     @Override
@@ -36,10 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.button_normal)
-    public void OnClick(){
-        sendNotification();
-    }
 
     @OnClick(R.id.button_action)
     public void OnClickAction(){
@@ -72,37 +69,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //创建普通Notification 只含有小图标，标题，内容
-    private void sendNotification() {
-        //获取NotificationManager实例
-        //实例化NotificationCompat.Builde并设置相关属性
-        NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                //设置小图标
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                //设置通知标题
-                .setContentTitle("最简单的Notification")
-                //设置通知内容
-                .setContentText("只有小图标、标题、内容");
-        //设置通知时间，默认为系统发出通知的时间，通常不用设置
-        //.setWhen(System.currentTimeMillis());
-        //通过builder.build()方法生成Notification对象,并发送通知,id=1
-        notifyManager.notify(1, builder.build());
-    }
     //带Action的Notification
     private void sendSimplestNotificationWithAction(){
         //获取PendingIntent
         Intent intent = new Intent(this,MainActivity.class);
         PendingIntent mainPendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                //这里注意 setLargeIcon(Bitmap icon)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setAutoCancel(true)
                 .setContentTitle("我是带Action的Notification")
                 .setContentText("点我会打开MainActivity")
+                .setSubText("it is really basic")
                 .setAutoCancel(true)
                 //set Intent
                 .setContentIntent(mainPendingIntent);
 
-        notifyManager.notify(2, builder.build());
+        notifyManager.notify(1, builder.build());
     }
 
     private void showNotifyWithRing() {
@@ -126,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 //调用系统自带的铃声
                 //notify.sound = Uri.withAppendedPath(MediaStore.Audio.Media.INTERNAL_CONTENT_URI,"2");
                 //mManager.notify(2,notify);
-        notifyManager.notify(3, builder.build());
+        notifyManager.notify(2, builder.build());
     }
 
     /**
